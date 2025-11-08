@@ -46,7 +46,9 @@
 
                 <!-- reCAPTCHA -->
                 <div class="mt-4">
-    {!! no_captcha()->display() !!}
+{!! NoCaptcha::renderJs() !!}
+{!! NoCaptcha::display() !!}
+
 
     @if ($errors->has('g-recaptcha-response'))
         <span class="text-sm text-red-600">
@@ -54,8 +56,6 @@
         </span>
     @endif
 </div>
-
-{!! no_captcha()->script() !!}
 
     </form>
 </x-guest-layout>

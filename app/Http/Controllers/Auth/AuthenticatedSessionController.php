@@ -31,7 +31,7 @@ class AuthenticatedSessionController extends Controller
         return redirect()->intended(route('dashboard', absolute: false));
 
         $request->validate([
-            'g-recaptcha-response' => ['required', 'no_captcha'],
+            'g-recaptcha-response' => ['required', 'No_Captcha'],
         ]);
         
         $request->authenticate();

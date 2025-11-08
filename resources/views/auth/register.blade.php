@@ -46,11 +46,7 @@
 
             <x-primary-button class="ms-4">
                 {{ __('Register') }}
-            </x-primary-button>
-        </div>
-
-        <!-- reCAPTCHA -->
-        <div class="mt-4">
+                <div class="mt-4">
     {{-- This line loads the necessary Google JavaScript --}}
     {!! NoCaptcha::renderJs() !!}
 
@@ -65,6 +61,10 @@
     @endif
 </div>
 
+            </x-primary-button>
+        </div>
+
+       
 
     </form>
 </x-guest-layout>
