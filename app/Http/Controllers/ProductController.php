@@ -36,7 +36,8 @@ class ProductController extends Controller
 
         Product::create($request->all());
 
-        return redirect()->route('products.index')
+        // Redirect to admin route after storing
+        return redirect()->route('admin.products.index')
                          ->with('success', 'Craft added successfully.');
     }
 
@@ -66,7 +67,8 @@ class ProductController extends Controller
 
         $product->update($request->all());
 
-        return redirect()->route('products.index')
+        // Redirect to admin route after updating
+        return redirect()->route('admin.products.index')
                          ->with('success', 'Craft updated successfully.');
     }
 
@@ -75,10 +77,12 @@ class ProductController extends Controller
     {
         $product->delete();
 
-        return redirect()->route('products.index')
+        // Redirect to admin route after deleting
+        return redirect()->route('admin.products.index')
                          ->with('success', 'Craft deleted successfully.');
     }
-//Shoppp Dito
+
+    // Shop page
     public function shop()
     {
         // We eager load 'category' to show it on the shop page
@@ -86,9 +90,4 @@ class ProductController extends Controller
 
         return view('shop.index', compact('products'));
     }
-
-
 }
-
-
-

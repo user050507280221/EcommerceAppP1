@@ -8,9 +8,22 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\Product;
 
 class CheckoutController extends Controller
 {
+    public function index()
+    {
+        // If cart is empty, redirect back to shop
+        if (Cart::count() == 0) {
+            return redirect()->route('shop.index')->with('error', 'Your cart is empty.');
+        }
+
+        // We'll pass the cart total to the view
+        $cartTotal = Cart::total();
+        return view('checkout.index', compact('cartTotal'));
+    }
+
     public function create()
     {
         if (Cart::count() == 0) {
@@ -22,32 +35,62 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
+        // Validate shipping info
         $request->validate([
-            'shipping_address' => 'required|string|max:1000',
+            'shipping_name' => 'required|string|max:255',
+            'shipping_address' => 'required|string|max:255',
+            'shipping_city' => 'required|string|max:255',
+            'shipping_phone' => 'required|string|max:20',
         ]);
 
-        DB::transaction(function () use ($request) {
-            // 1. Create the Order
+        try {
+            DB::beginTransaction();
+
+            // Check stock for every item in cart
+            foreach (Cart::content() as $item) {
+                $product = Product::findOrFail($item->id);
+                if ($product->stock < $item->qty) {
+                    DB::rollBack();
+                    return redirect()->route('cart.index')->with('error', 'The product "' . $product->name . '" does not have enough stock.');
+                }
+            }
+
+            // Create the Order
             $order = Order::create([
                 'user_id' => Auth::id(),
-                'shipping_address' => $request->shipping_address,
-                'total' => Cart::total(2, '.', ''),
                 'status' => 'pending',
+                'total_price' => Cart::total(2, '.', ''), // Total without formatting
+                'shipping_name' => $request->shipping_name,
+                'shipping_address' => $request->shipping_address,
+                'shipping_city' => $request->shipping_city,
+                'shipping_phone' => $request->shipping_phone,
             ]);
-            // 2. Create the Order Items
-            foreach (Cart::content() as $cartItem) {
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $cartItem->id,
-                    'quantity' => $cartItem->qty,
-                    'price' => $cartItem->price,
+
+            // Create Order Items and update stock
+            foreach (Cart::content() as $item) {
+                // Attach product to order (pivot table)
+                $order->products()->attach($item->id, [
+                    'quantity' => $item->qty,
+                    'price' => $item->price,
                 ]);
+
+                // Update product stock
+                $product = Product::findOrFail($item->id);
+                $product->stock -= $item->qty;
+                $product->save();
             }
-             // 3. Clear the cart
+
+            DB::commit();
+
+            // Clear the cart
             Cart::destroy();
-        });
-            // 4. Redirect to a "success" page
-        return redirect()->route('checkout.success');
+
+            // Redirect to thank you / dashboard page
+            return redirect()->route('dashboard')->with('success', 'Order placed successfully! Thank you for your purchase.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('checkout.index')->with('error', 'An error occurred while placing your order. Please try again. Error: ' . $e->getMessage());
+        }
     }
 
     public function success()

@@ -62,5 +62,9 @@
                 {{ $slot }}
             </div>
         </div>
+        <head>
+    {!! NoCaptcha::renderJs() !!}
+</head>
+
     </body>
 </html>

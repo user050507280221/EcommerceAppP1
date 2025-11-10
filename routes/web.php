@@ -7,38 +7,43 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\AdminController;
 
-// ... cart routes ...
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::delete('/cart/remove/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
-Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+// --------------------
+// Public Routes
+// --------------------
 
-
-//di ko rin alam
-Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites');
-
-
-// Public "Shop" Route (no auth required)
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
-
-// Welcome route
+// Welcome page
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Profile routes and Category routes inside one auth group
+// Shop
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+
+// Cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'store'])->name('cart.store');
+Route::post('/cart/add/{product}', [CartController::class, 'store'])->name('cart.store'); // keeps old route
+Route::delete('/cart/remove/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+// --------------------
+// Authenticated User Routes
+// --------------------
 Route::middleware('auth')->group(function () {
+
+    // Dashboard
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware('verified')->name('dashboard');
+
     // Profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    // Categories
+    // Categories & Products (user)
     Route::resource('categories', CategoryController::class);
-
-    // Product Management (CRUD)
     Route::resource('products', ProductController::class);
 
     // Checkout
@@ -47,13 +52,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/success', [CheckoutController::class, 'success'])->name('checkout.success');
 });
 
-// Shopping Cart Routes (can be public or protected depending on your design)
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add/{product}', [CartController::class, 'store'])->name('cart.store');
-Route::delete('/cart/remove/{rowId}', [CartController::class, 'destroy'])->name('cart.destroy');
+// --------------------
+// Admin Routes
+// --------------------
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    // Admin Dashboard
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+
+    // Product Management
+    Route::resource('products', ProductController::class);
+
+    // Category Management
+    Route::resource('categories', CategoryController::class);
+
+    // Order Management
+    Route::get('/orders', [AdminController::class, 'orders'])->name('orders.index');
+    Route::get('/orders/{order}', [AdminController::class, 'showOrder'])->name('orders.show');
+    Route::patch('/orders/{order}/status', [AdminController::class, 'updateOrderStatus'])->name('orders.updateStatus');
+});
 
 require __DIR__.'/auth.php';

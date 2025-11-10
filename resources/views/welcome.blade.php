@@ -51,8 +51,7 @@
             @endauth
         </nav>
     @endif
-</header>
-                <!-- SHOP LINK ADDED -->
+                    <!-- SHOP LINK ADDED -->
                  @if (Route::has('login'))
     <livewire:welcome.navigation />
 @endif
@@ -62,6 +61,8 @@
         Go to Shop
     </a>
 </div>
+</header>
+
 
 
 

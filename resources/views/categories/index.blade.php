@@ -9,6 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+                <!-- Add New Category -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <h3 class="text-lg font-medium mb-4">Add New Category</h3>
@@ -29,7 +30,8 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('categories.store') }}" method="POST">
+                        <!-- Add New Category Form -->
+                        <form action="{{ route('admin.categories.store') }}" method="POST"> <!-- admin prefix -->
                             @csrf
                             <div>
                                 <x-input-label for="name" :value="__('Category Name')" />
@@ -44,10 +46,12 @@
                     </div>
                 </div>
 
+                <!-- Existing Categories -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <h3 class="text-lg font-medium mb-4">Existing Categories</h3>
 
+                        <!-- Existing Categories Table -->
                         <table class="min-w-full bg-white border border-gray-200">
                             <thead class="bg-gray-100">
                                 <tr>
@@ -62,12 +66,12 @@
                                         <td class="py-2 px-4 border-b">{{ $category->name }}</td>
                                         <td class="py-2 px-4 border-b">{{ $category->products_count }}</td>
                                         <td class="py-2 px-4 border-b">
-                                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure? This will not delete products.');">
+                                            <form action="{{ route('admin.categories.destroy', $category->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure? This will not delete products.');"> <!-- admin prefix -->
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
                                             </form>
-                                            </td>
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
@@ -76,6 +80,7 @@
                                 @endforelse
                             </tbody>
                         </table>
+
                     </div>
                 </div>
 

@@ -10,20 +10,30 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
+                    <!-- Add Product Button -->
                     <div class="flex justify-end mb-4">
-                        <a href="{{ route('products.create') }}">
+                        <a href="{{ route('admin.products.create') }}">
                             <x-primary-button>
                                 {{ __('Add New Product') }}
                             </x-primary-button>
                         </a>
                     </div>
 
+                    <!-- Single Product Image (optional) -->
+                    @if(isset($product))
+                        <img src="{{ asset('storage/' . $product->image) }}" 
+                             alt="{{ $product->name }}" 
+                             class="w-full h-48 object-cover mb-4">
+                    @endif
+
+                    <!-- Success Message -->
                     @if (session('success'))
                         <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
                             {{ session('success') }}
                         </div>
                     @endif
 
+                    <!-- Products Table -->
                     <div class="overflow-x-auto">
                         <table class="min-w-full bg-white border border-gray-200">
                             <thead class="bg-gray-100">
@@ -43,9 +53,10 @@
                                         <td class="py-2 px-4 border-b">${{ number_format($product->price, 2) }}</td>
                                         <td class="py-2 px-4 border-b">{{ $product->stock }}</td>
                                         <td class="py-2 px-4 border-b">
-                                            <a href="{{ route('products.edit', $product->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-2">Edit</a>
-                                            
-                                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-2">
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
@@ -60,7 +71,8 @@
                             </tbody>
                         </table>
                     </div>
-                    
+
+                    <!-- Pagination -->
                     <div class="mt-4">
                         {{ $products->links() }}
                     </div>

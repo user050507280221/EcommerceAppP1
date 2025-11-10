@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('products.update', $product->id) }}" method="POST">
+                    <form action="{{ route('admin.products.update', $product->id) }}" method="POST"> <!-- added admin prefix -->
                         @csrf
                         @method('PUT')
 
@@ -63,7 +63,7 @@
 
                         <!-- Actions -->
                         <div class="flex items-center justify-end mt-4">
-                            <a href="{{ route('products.index') }}" class="text-gray-600 hover:text-gray-900 mr-4">
+                            <a href="{{ route('admin.products.index') }}" class="text-gray-600 hover:text-gray-900 mr-4"> <!-- admin prefix -->
                                 {{ __('Cancel') }}
                             </a>
                             <x-primary-button>
