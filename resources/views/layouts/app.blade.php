@@ -16,25 +16,25 @@
 </head>
 <body class="font-sans antialiased bg-gray-100">
     <div class="min-h-screen flex flex-col">
-        
+
         {{-- Navigation Bar --}}
         @include('layouts.navigation')
 
         {{-- Page Header (Optional) --}}
-        @isset($header)
+        @hasSection('header')
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
+                    @yield('header')
                 </div>
             </header>
-        @endisset
+        @endif
 
         {{-- Main Content --}}
         <main class="flex-1">
-            {{ $slot }}
+            @yield('content')
         </main>
 
-        {{-- Footer (Optional) --}}
+        {{-- Footer --}}
         <footer class="bg-white shadow mt-auto">
             <div class="max-w-7xl mx-auto px-4 py-4 text-center text-gray-500 text-sm">
                 &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.

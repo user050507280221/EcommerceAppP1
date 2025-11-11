@@ -10,9 +10,10 @@ class CategoryController extends Controller
     // Show all categories with pagination
     public function index()
     {
-        // Use paginate instead of all
         $categories = Category::latest()->paginate(10);
-        return view('categories.index', compact('categories'));
+
+        // Use the admin view
+        return view('admin.categories.index', compact('categories'));
     }
 
     // Store a new category
