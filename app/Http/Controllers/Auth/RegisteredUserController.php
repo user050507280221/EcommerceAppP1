@@ -31,16 +31,18 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            
+            // ✅ Add this line for ReCaptcha validation
             'g-recaptcha-response' => ['required', 'captcha'],
         ], [
-            // (Optional) Add custom error messages
+            // (Optional) Custom error messages
             'g-recaptcha-response.required' => 'Please verify that you are not a robot.',
-            'g-recaptcha-response.captcha' => 'The reCAPTCHA check failed. Please try again.',
-    
+            'g-recaptcha-response.captcha' => 'The reCAPTCHA verification failed. Please try again.',
         ]);
 
+        // ✅ Create the user
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

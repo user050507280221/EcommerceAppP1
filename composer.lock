@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4f4473b8aeac686ea5b6cc535c0756a",
+    "content-hash": "80417d32536f1cb0fb810097699a4c6c",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -1115,6 +1115,72 @@
                 }
             ],
             "time": "2025-08-22T14:27:06+00:00"
+        },
+        {
+            "name": "kupidonkhv/shoppingcart",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kupidonkhv/LaravelShoppingcart.git",
+                "reference": "47b4e4b7a9e8221f0412013a3d4b9545d2c4d074"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kupidonkhv/LaravelShoppingcart/zipball/47b4e4b7a9e8221f0412013a3d4b9545d2c4d074",
+                "reference": "47b4e4b7a9e8221f0412013a3d4b9545d2c4d074",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/events": "^10.0||^11.0||^12.0",
+                "illuminate/session": "^10.0||^11.0||^12.0",
+                "illuminate/support": "^10.0||^11.0||^12.0",
+                "nesbot/carbon": "^2.0||^3.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.6",
+                "orchestra/testbench": "^8.0",
+                "phpunit/phpunit": "^10.0"
+            },
+            "suggest": {
+                "gloudemans/notify": "Simple flash notifications for Laravel"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Cart": "Gloudemans\\Shoppingcart\\Facades\\Cart"
+                    },
+                    "providers": [
+                        "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Gloudemans\\Shoppingcart\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kupidonkhv",
+                    "email": "Kupidonkhv13@gmail.com",
+                    "homepage": "https://khvweb.com"
+                }
+            ],
+            "description": "Laravel Shoppingcart",
+            "keywords": [
+                "laravel",
+                "shoppingcart"
+            ],
+            "support": {
+                "source": "https://github.com/kupidonkhv/LaravelShoppingcart/tree/v4.0.0"
+            },
+            "time": "2025-09-22T10:52:05+00:00"
         },
         {
             "name": "laravel/framework",

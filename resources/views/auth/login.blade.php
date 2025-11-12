@@ -44,18 +44,18 @@
             </x-primary-button>
         </div>
 
-                <!-- reCAPTCHA -->
-                <div class="mt-4">
-    {!! no_captcha()->display() !!}
+    <!-- reCAPTCHA -->
+    <div class="mt-4">
+        {!! NoCaptcha::display() !!}
 
-    @if ($errors->has('g-recaptcha-response'))
-        <span class="text-sm text-red-600">
-            <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
-        </span>
-    @endif
-</div>
+        @error('g-recaptcha-response')
+            <span class="text-sm text-red-600">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
 
-{!! no_captcha()->script() !!}
+    {!! NoCaptcha::renderJs() !!}
 
     </form>
 </x-guest-layout>
