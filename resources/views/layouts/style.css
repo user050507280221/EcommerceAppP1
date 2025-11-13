@@ -1,0 +1,159 @@
+/* ===== Handmade Crafts Marketplace Theme ===== */
+
+/* Root color palette */
+:root {
+  --color-cream: #f9f4ef;
+  --color-beige: #f2e5d7;
+  --color-clay: #d8a47f;
+  --color-brown: #7b4b33;
+  --color-olive: #9c8b6e;
+  --color-dark: #3c2f2f;
+}
+
+/* Body and general layout */
+body {
+  background-color: var(--color-cream);
+  color: var(--color-dark);
+  font-family: "Figtree", sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+/* Navigation Bar */
+nav {
+  background-color: var(--color-beige);
+  border-bottom: 2px solid var(--color-clay);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav a {
+  color: var(--color-dark);
+  font-weight: 500;
+  transition: color 0.3s, transform 0.2s;
+}
+
+nav a:hover {
+  color: var(--color-brown);
+  transform: scale(1.05);
+}
+
+/* Logo Styling */
+nav .flex.items-center a img,
+.x-application-logo {
+  border-radius: 50%;
+  border: 2px solid var(--color-clay);
+  padding: 4px;
+  transition: transform 0.3s ease-in-out;
+}
+
+nav .flex.items-center a:hover img {
+  transform: rotate(5deg) scale(1.05);
+}
+
+/* Header section */
+header {
+  background-color: var(--color-beige);
+  box-shadow: inset 0 -1px 3px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+header h1, header h2 {
+  color: var(--color-brown);
+  font-weight: 600;
+}
+
+/* Main Content */
+main {
+  padding: 2rem;
+  background-color: var(--color-cream);
+  border-radius: 10px;
+  margin: 1rem auto;
+  max-width: 1200px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* Buttons */
+button, .btn {
+  background-color: var(--color-clay);
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover, .btn:hover {
+  background-color: var(--color-brown);
+  transform: translateY(-2px);
+}
+
+/* Card containers (useful for shop or product items) */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--color-beige);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  padding: 1rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Footer */
+footer {
+  background-color: var(--color-beige);
+  text-align: center;
+  padding: 1rem;
+  color: var(--color-dark);
+  font-size: 0.9rem;
+  border-top: 2px solid var(--color-clay);
+}
+
+/* Forms (like login/register) */
+input, select, textarea {
+  border: 1px solid var(--color-olive);
+  border-radius: 6px;
+  padding: 0.5rem;
+  width: 100%;
+  background-color: #fff;
+  transition: border 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--color-clay);
+}
+
+/* Captcha box */
+.g-recaptcha {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  nav .flex.justify-between {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+  main {
+    padding: 1rem;
+  }
+
+  .card {
+    margin: 1rem 0;
+  }
+}
