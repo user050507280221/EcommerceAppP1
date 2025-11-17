@@ -13,7 +13,20 @@ return new class extends Migration
     {
         Schema::create('order_product', function (Blueprint $table) {
             $table->id();
+
+            // Foreign keys
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('product_id');
+
+            // Other fields
+            $table->integer('quantity')->default(1);
+            $table->decimal('price', 10, 2);
+
             $table->timestamps();
+
+            // Foreign key constraints
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

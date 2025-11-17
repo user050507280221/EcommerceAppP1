@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order_product', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->foreignId('product_id')->nullable()->constrained('products')->onDelete('set null');
+Schema::create('orders', function (Blueprint $table) {
+    $table->id();
+    $table->unsignedBigInteger('user_id');
+    $table->decimal('total', 10, 2);
+    $table->timestamps();
 
-            $table->integer('quantity');
-            $table->decimal('price', 10, 2); // Price per unit at time of sale
+    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+});
 
-            $table->timestamps();
-        });
     }
 
 

@@ -5,7 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use App\Models\Product;
+use App\Models\Product; // <-- Import Product
 
 class ProductCard extends Component
 {
@@ -23,5 +23,6 @@ class ProductCard extends Component
     {
         return view('components.product-card');
     }
+
 }
 

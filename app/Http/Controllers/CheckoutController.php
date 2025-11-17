@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Darryldecode\Cart\Facades\Cart;
  // ✅ Use the class directly
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
